@@ -1,13 +1,9 @@
 {
-  "ts-node": {
-    "files": true
-  },
-  "files": ["./types/index.d.ts"],
   "compilerOptions": {
     "pretty": true,
     "target": "es2020",
     "module": "Node16",
-    "rootDir": "./src",
+    "rootDir": ".",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "./dist",
@@ -28,8 +24,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "typeRoots": ["node_modules/@types", "./types"]
+    "skipLibCheck": true
   },
   "exclude": ["node_modules"]
 }

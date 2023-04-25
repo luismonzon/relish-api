@@ -6,6 +6,7 @@ import morgan from "morgan";
 import photoRouter from "./routes/photos";
 import createError, { HttpError } from "http-errors";
 import dotenv from "dotenv";
+import cors from "cors";
 
 const ExpressApp = (): Application => {
   dotenv.config();
@@ -17,7 +18,7 @@ const ExpressApp = (): Application => {
   app.use(helmet());
   app.use(cookieParser());
   app.use(morgan("dev"));
-
+  app.use(cors());
   app.use("/photos", photoRouter);
 
   app.use(function (_: Request, __: Response, next: NextFunction): void {

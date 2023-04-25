@@ -10,6 +10,8 @@ router.get(
     query("title").isString().optional(),
     query("album.title").isString().optional(),
     query("album.user.email").isString().optional(),
+    query("limit").isInt().optional(),
+    query("offset").isInt().optional(),
   ],
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const result = validationResult(req);
@@ -23,12 +25,18 @@ router.get(
       const albumTitle = req.query["album.title"] as string;
       const userEmail = req.query["album.user.email"] as string;
       const title = req.query.title as string;
+      const limit = +(req.query.limit as string);
+      const offset = +(req.query.offset as string);
 
-      const enrichedPhotos = await photoEnrichmentService.getPhotosBy({
-        title,
-        userEmail,
-        albumTitle,
-      });
+      const enrichedPhotos = await photoEnrichmentService.getPhotosBy(
+        {
+          title,
+          userEmail,
+          albumTitle,
+        },
+        limit,
+        offset
+      );
       res.send(enrichedPhotos);
     } catch (error) {
       next(error);

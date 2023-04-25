@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { Photo } from "..";
 
 async function getBy(photoId?: number): Promise<Photo> {
   const { data } = await axios.get<Photo>(

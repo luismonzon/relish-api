@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { Album } from "..";
 
 async function getBy(albumId?: number): Promise<Album> {
   const { data } = await axios.get<Album>(

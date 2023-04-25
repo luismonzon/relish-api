@@ -3,8 +3,11 @@ import externalPhotoService from "./photo.service";
 import albumService from "./album.service";
 import { nonNullable } from "../utils/validations";
 import { applyFilters } from "../utils/filters/applyFilters";
+import type { EnrichedPhoto, Filter } from "..";
 
 type PhotoFilters = { title: string; albumTitle: string; userEmail: string };
+const OFFSET = 0;
+const LIMIT = 25;
 
 async function getPhoto(photoId: number): Promise<EnrichedPhoto> {
   const photo = await externalPhotoService.getBy(photoId);
@@ -43,11 +46,12 @@ async function getPhotos(): Promise<EnrichedPhoto[]> {
     return { ...restPhoto, album: { ...restAlbum, user } };
   });
 }
-async function getPhotosBy({
-  title,
-  albumTitle,
-  userEmail,
-}: PhotoFilters): Promise<EnrichedPhoto[]> {
+
+async function getPhotosBy(
+  { title, albumTitle, userEmail }: PhotoFilters,
+  limit: number = LIMIT,
+  offset: number = OFFSET
+): Promise<EnrichedPhoto[]> {
   const filters: Filter<EnrichedPhoto>[] = [
     title
       ? (enrichedPhoto: EnrichedPhoto) =>
@@ -66,7 +70,17 @@ async function getPhotosBy({
 
   const photos = await getPhotos();
 
-  return photos.filter((enrichedPhoto) => applyFilters(filters, enrichedPhoto));
+  const filteredPhotos = photos.filter((enrichedPhoto) =>
+    applyFilters(filters, enrichedPhoto)
+  );
+
+  const start =
+    offset >= 0 && offset <= filteredPhotos.length ? offset : OFFSET;
+
+  const end =
+    start + limit <= filteredPhotos.length ? start + limit : start + LIMIT;
+
+  return filteredPhotos.slice(start, end);
 }
 
 export default { getPhoto, getPhotosBy };
