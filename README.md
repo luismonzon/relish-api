@@ -2,6 +2,16 @@
 
 relish api
 
+## Public URL
+
+Open [https://d3jmrsdyq8n7xp.cloudfront.net](https://d3jmrsdyq8n7xp.cloudfront.net)
+
+The route `photos` is used for retrieve the photos enrichment
+
+Example:
+List: [https://d3jmrsdyq8n7xp.cloudfront.net/photos](https://d3jmrsdyq8n7xp.cloudfront.net/photos)
+Individual: [https://d3jmrsdyq8n7xp.cloudfront.net/photos/1](https://d3jmrsdyq8n7xp.cloudfront.net/photos/1)
+
 ## Available Scripts
 
 In the project directory, you can run:
